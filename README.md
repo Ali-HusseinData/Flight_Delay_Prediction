@@ -1,6 +1,6 @@
 # ✈️ Flight Delay Prediction
 
-A machine learning project to predict whether a flight will be delayed based on historical flight data and weather conditions.
+A machine learning project to predict whether a flight will be delayed using historical flight records.
 
 ---
 
@@ -19,14 +19,38 @@ This project applies **data analysis**, **feature engineering**, and **machine l
 
 ---
 
+## Results & Visualizations
+
+- **Visual EDA: Delay distributions, feature correlations**
+
+- **Confusion Matrix & Classification Report**
+
+- **Precision-Recall Curve**
+
+- Best model was **Random Forest** achieving:
+  
+    **Accuracy:** 93%
+  
+    **F1-score:** 77%
+
+Full results and plots are available inside the notebook.
+
+---
 ## Dataset
 The dataset contains:
 - Flight date and time
 - Airline information
 - Departure & arrival airports
-- Weather conditions
 - Delay status (target variable)
 
 > **Note:** The dataset used in this notebook is not included due to licensing restrictions.  
 > To reproduce results, you can use a public dataset such as:  
 > [US DOT Flight Delays dataset on Kaggle](https://www.kaggle.com/datasets/usdot/flight-delays).
+
+## Future Improvements
+
+- Integrate model into a chatbot for real-time delay queries
+
+- Build a web app (e.g., with Flask or Streamlit)
+
+- Use live flight + weather APIs for real-time predictions
