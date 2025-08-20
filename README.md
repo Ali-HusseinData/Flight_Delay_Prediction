@@ -13,7 +13,7 @@ This project applies **data analysis**, **feature engineering**, and **machine l
 ## Key Features
 - **Data Cleaning & Preprocessing**: Handling missing values, encoding categorical variables, scaling numerical features
 - **Exploratory Data Analysis (EDA)**: Visualizing delay trends, correlations, and patterns
-- **Feature Engineering**: Extracting time-based features
+- **Feature Engineering & Selection**: Extracted time-based features, encoded categorical variables (airline, origin and destination airports), and defined a binary delay flag
 - **Model Training**: Testing multiple ML algorithms and tuning hyperparameters
 - **Evaluation**: Accuracy, F1-score, precision, recall, and confusion matrix
 
