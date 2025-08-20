@@ -23,6 +23,10 @@ This project applies **data analysis**, **feature engineering**, and **machine l
 
 - **Visual EDA: Delay distributions, feature correlations**
 
+  <img width="833" height="701" alt="image" src="https://github.com/user-attachments/assets/6a7a0c19-1c47-4ae5-9d11-3b6e4442c017" />
+  <img width="1112" height="1179" alt="image" src="https://github.com/user-attachments/assets/3619be3a-b387-427f-846d-82762ef574f4" />
+
+
 - **Confusion Matrix & Classification Report**
 
 - **Precision-Recall Curve**
