@@ -28,8 +28,25 @@ This project applies **data analysis**, **feature engineering**, and **machine l
 
 
 - **Confusion Matrix & Classification Report**
+<img width="683" height="547" alt="image" src="https://github.com/user-attachments/assets/262006b2-231b-4ba5-9d7d-54da6331b0e4" />
+
+
+```
+          precision    recall  f1-score   support
+
+       0       0.93      0.98      0.96    934555
+       1       0.88      0.68      0.77    202100
+
+accuracy                           0.93   1136655
+
+macro avg      0.91      0.83      0.86   1136655
+weighted avg   0.92      0.93      0.92   1136655 
+```
 
 - **Precision-Recall Curve**
+  
+  <img width="691" height="547" alt="image" src="https://github.com/user-attachments/assets/23334d7a-3945-4de4-aeb9-b6735b2552b2" />
+
 
 - Best model was **Random Forest** achieving:
   
