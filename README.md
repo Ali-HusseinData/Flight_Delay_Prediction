@@ -5,17 +5,22 @@ A machine learning project to predict whether a flight will be delayed using his
 ---
 
 ## Overview
-Flight delays can cause inconvenience to passengers and financial losses to airlines.  
-This project applies **data analysis**, **feature engineering**, and **machine learning** techniques to predict flight delays.
+Flight delays affect passengers and operators alike. This project demonstrates a data-science workflow — from cleaning and exploratory analysis to feature engineering, model training, and evaluation — to predict whether a flight will be delayed (binary target).
+
+The analysis and models are implemented in the included Jupyter notebook (Flight_Delay_Prediction.ipynb).
 
 ---
 
 ## Key Features
-- **Data Cleaning & Preprocessing**: Handling missing values, encoding categorical variables, scaling numerical features
-- **Exploratory Data Analysis (EDA)**: Visualizing delay trends, correlations, and patterns
-- **Feature Engineering & Selection**: Extracted time-based features, encoded categorical variables (airline, origin and destination airports), and defined a binary delay flag
-- **Model Training**: Testing multiple ML algorithms and tuning hyperparameters
-- **Evaluation**: Accuracy, F1-score, precision, recall, and confusion matrix
+**Data cleaning & preprocessing:** handling missing values, encoding categorical variables, scaling numeric features.
+
+**Exploratory data analysis (EDA):** visualizations for delay distributions, time-based patterns and correlations.
+
+**Feature engineering & selection:** extracted time-related features and encoded airline / airport categorical variables; binary delay flag defined as the target.
+
+**Model training:** experimented with multiple ML algorithms, performed hyperparameter tuning and 
+
+**Evaluation:** reported accuracy, precision, recall, F1-score and confusion matrices; plotted precision-recall curves.
 
 ---
 
@@ -58,20 +63,36 @@ Full results and plots are available inside the notebook.
 
 ---
 ## Dataset
-The dataset contains:
-- Flight date and time
-- Airline information
-- Departure & arrival airports
-- Delay status (target variable)
+The dataset used in the notebook contains flight records with fields such as:
 
-> **Note:** The dataset used in this notebook is not included due to licensing restrictions.  
-> To reproduce results, you can use a public dataset such as:  
-> [US DOT Flight Delays dataset on Kaggle](https://www.kaggle.com/datasets/usdot/flight-delays).
+- flight date and time
 
+- airline
+
+- origin and destination airports
+
+- departure/arrival timestamps and delay status (target)
+
+**Important:** the dataset is not included in this repository due to licensing restrictions. To reproduce the results, obtain a public dataset such as the US DOT / Kaggle "Flight Delays" or "Airline On-Time Performance" datasets and place the CSV(s) in a data/ folder, then update the notebook paths accordingly.
+
+Suggested dataset path used by the notebook:
+
+```text
+./data/flights.csv
+```
+---
+## Reproducibility Notes
+
+- Heavy preprocessing / model training can be resource-intensive; consider running on a machine with sufficient RAM or subsample the dataset for exploratory work.
+
+- If using SMOTE or other resampling techniques, be careful to apply them only to the training split to avoid data leakage.
+---
 ## Future Improvements
 
-- Integrate model into a chatbot for real-time delay queries
+- Deploy the best model as a REST API (FastAPI / Flask) for real-time predictions.
 
-- Build a web app (e.g., with Flask or Streamlit)
+- Create a lightweight web UI (Streamlit) for user queries and visualizations.
 
-- Use live flight + weather APIs for real-time predictions
+- Integrate live flight and weather APIs to enable on-the-fly predictions.
+
+- Experiment with time-series models and deep learning (LSTM / Transformer) for sequential dependencies.
