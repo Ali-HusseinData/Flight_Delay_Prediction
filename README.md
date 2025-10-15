@@ -1,40 +1,58 @@
 # ✈️ Flight Delay Prediction
 
-A machine learning project to predict whether a flight will be delayed using historical flight records.
+**End-to-end project (data acquisition → preprocessing → modeling → deployment)**. This repo contains a Jupyter notebook (Flight_Delay_Prediction.ipynb) that walks through data cleaning, EDA, feature engineering, model comparison and a production-friendly deployment (FastAPI + example client).
 
 ---
-
+## Table of Contents
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Visualizations](#visualizations)
+- [Results](#results)
+- [Getting Started](#getting-started)
+- [Dataset](#dataset)
+- [Using the API](#using-the-api)
+- [Future Improvements](#future-improvements)
+- [Contact](#contact)
+  
+---
 ## Overview
-Flight delays affect passengers and operators alike. This project demonstrates a data-science workflow — from cleaning and exploratory analysis to feature engineering, model training, and evaluation — to predict whether a flight will be delayed (binary target).
+Flight delays affect passengers and operators alike. This project presents an end-to-end ML workflow to predict whether a flight will be delayed (binary target). It emphasizes deployment, with LightGBM recommended for production due to its efficiency and speed.
 
 The analysis and models are implemented in the included Jupyter notebook (Flight_Delay_Prediction.ipynb).
 
 ---
 
 ## Key Features
-**Data cleaning & preprocessing:** handling missing values, encoding categorical variables, scaling numeric features.
+Data cleaning & preprocessing (missing values, categorical encoding, scaling)
 
-**Exploratory data analysis (EDA):** visualizations for delay distributions, time-based patterns and correlations.
+EDA: delay distributions and time-based patterns
 
-**Feature engineering & selection:** extracted time-related features and encoded airline / airport categorical variables; binary delay flag defined as the target.
+Feature engineering: time features and categorical encodings
 
-**Model training:** experimented with multiple ML algorithms, performed hyperparameter tuning and 
+Model comparison: Logistic Regression, Random Forest, XGBoost, LightGBM
 
-**Evaluation:** reported accuracy, precision, recall, F1-score and confusion matrices; plotted precision-recall curves.
+Deployment: example FastAPI app included for serving predictions
 
 ---
 
-## Results & Visualizations
+## Visualizations
 
-- **Visual EDA: Delay distributions, feature correlations**
+- **Visual EDA: Feature correlations, Flights' monthly distribution**
+    <img width="600" height="650" alt="image" src="https://github.com/user-attachments/assets/3619be3a-b387-427f-846d-82762ef574f4" />
+    
+  <img width="600" height="547" alt="image" src="https://github.com/user-attachments/assets/7d3bdcda-0d87-4f2b-93c0-d1964b84aefb" />
 
-  <img width="833" height="701" alt="image" src="https://github.com/user-attachments/assets/6a7a0c19-1c47-4ae5-9d11-3b6e4442c017" />
-  <img width="1112" height="1179" alt="image" src="https://github.com/user-attachments/assets/3619be3a-b387-427f-846d-82762ef574f4" />
+- **Precision-Recall Curve of RFC Model**
+  
+  <img width="600" height="547" alt="image" src="https://github.com/user-attachments/assets/23334d7a-3945-4de4-aeb9-b6735b2552b2" />
+  
+## Results
+- **Random Forest (best experimental metrics)**: Accuracy ≈ **93**%, F1-score (delay) ≈ **77**%.
+Note: Random Forest achieved the highest metrics in experiments but is heavy for deployment.
 
-
-- **Confusion Matrix & Classification Report**
-<img width="683" height="547" alt="image" src="https://github.com/user-attachments/assets/262006b2-231b-4ba5-9d7d-54da6331b0e4" />
-
+- **Chosen deployment model — LightGBM**: recommended for production (lighter, faster); achieved **~88% accuracy** in experiments.
+  
+- **Classification Report (example of Random Forest)**
 
 ```
           precision    recall  f1-score   support
@@ -48,18 +66,31 @@ macro avg      0.91      0.83      0.86   1136655
 weighted avg   0.92      0.93      0.92   1136655 
 ```
 
-- **Precision-Recall Curve**
-  
-  <img width="691" height="547" alt="image" src="https://github.com/user-attachments/assets/23334d7a-3945-4de4-aeb9-b6735b2552b2" />
-
-
-- Best model was **Random Forest** achieving:
-  
-    **Accuracy:** 93%
-  
-    **F1-score:** 77%
-
 Full results and plots are available inside the notebook.
+
+---
+## Getting Started
+### Prerequisites
+- Python 3.8+ (if running locally) or Google Colab (recommended for convenience)
+
+- Jupyter / JupyterLab (local) or just open the notebook in Colab
+### Recommended pipeline (Google Drive + Colab)
+1. In Google Drive create a folder named ```Flight Delay Prediction``` (or any name you prefer). Place your dataset CSV inside that folder and name it ```flights.csv``` .
+
+2. Typical Colab data path used by the notebook:
+```
+/content/drive/MyDrive/Flight Delay Prediction/flights.csv
+```
+4. In Colab, mount the drive at the start of the notebook:
+```
+from google.colab import drive
+drive.mount('/content/drive')
+```
+4. If you have limited RAM, enable a GPU runtime (Runtime → Change runtime type → GPU) and select **T4**. This speeds up certain training steps and reduces memory pressure.
+
+5. Clone this repo in Colab and run the notebook cells. You can edit the path for ```df``` variable in the notebook if you used a different folder name.
+
+Why this pipeline? Mounting Drive avoids manual file uploads each session and makes the notebook quicker to start. Using Colab with T4 GPU helps users with limited local resources run heavier cells. 
 
 ---
 ## Dataset
@@ -75,17 +106,27 @@ The dataset used in the notebook contains flight records with fields such as:
 
 **Important:** the dataset is not included in this repository due to licensing restrictions. To reproduce the results, obtain a public dataset such as the US DOT / Kaggle "Flight Delays" or "Airline On-Time Performance" datasets and place the CSV(s) in a data/ folder, then update the notebook paths accordingly.
 
-Suggested dataset path used by the notebook:
-
-```text
-./data/flights.csv
-```
 ---
-## Reproducibility Notes
+## Using the API (FastAPI)
+A sample FastAPI app is included to serve the trained model. After starting the API (e.g., ```uvicorn app:app --reload```), open the auto-generated Swagger UI at ```http://localhost:8000/docs```.
 
-- Heavy preprocessing / model training can be resource-intensive; consider running on a machine with sufficient RAM or subsample the dataset for exploratory work.
+To test the prediction endpoint via Swagger UI:
 
-- If using SMOTE or other resampling techniques, be careful to apply them only to the training split to avoid data leakage.
+1. Click the ```/predict``` POST endpoint.
+
+2. Click Try it out and paste the JSON payload below into the request body:
+```
+{
+"month": 4,
+"day": 7,
+"airline": "AA",
+"origin_airport": "LAX",
+"destination_airport": "JFK",
+"scheduled_departure": 100,
+"scheduled_arrival": 1600
+}
+```
+3. Click **Execute** to submit the request and inspect the model response.
 ---
 ## Future Improvements
 
@@ -96,3 +137,6 @@ Suggested dataset path used by the notebook:
 - Integrate live flight and weather APIs to enable on-the-fly predictions.
 
 - Experiment with time-series models and deep learning (LSTM / Transformer) for sequential dependencies.
+---
+## Contact
+Open an issue or contact the repository owner for questions, dataset access, or collaboration.
